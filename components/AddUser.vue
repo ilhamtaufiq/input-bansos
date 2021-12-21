@@ -19,7 +19,7 @@
             <label class="uppercase tracking-wide text-black text-xs font-bold mb-2">
               Umur
             </label>
-            <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" type="number" name="umur" v-model="umur" placeholder="Umur">
+            <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" type="number" min="25" name="umur" v-model="umur" placeholder="Umur">
           </div>
           <div class="md:w-1/2 px-3">
             <label class="uppercase tracking-wide text-black text-xs font-bold mb-2">
@@ -44,13 +44,14 @@
             <label class="uppercase tracking-wide text-black text-xs font-bold mb-2">
               Foto KTP
             </label>
-            <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" type="file" accept="image/png" @change=uploadKTP placeholder="Upload Foto KTP">
+            <!-- Maksimal 2MB, format JPG/JPEG/PNG/BMP -->
+            <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" type="file" accept="image/jpg, image/png, image/jpeg, image/bmp, image/png" @change=uploadKTP placeholder="Upload Foto KTP">
           </div>
           <div class="md:w-1/2 px-3">
             <label class="uppercase tracking-wide text-black text-xs font-bold mb-2">
               Foto KK
             </label>
-            <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" type="file" accept="image/png" @change=uploadKK placeholder="Upload Foto KK">
+            <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" type="file" accept="image/jpg, image/png, image/jpeg, image/bmp, image/png" @change=uploadKK placeholder="Upload Foto KK">
           </div>
         </div>
         <div class="-mx-3 md:flex mb-6">
@@ -84,7 +85,7 @@
             <label class="uppercase tracking-wide text-black text-xs font-bold mb-2">
               Alamat
             </label>
-            <textarea class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" name="alamat" v-model="alamat" placeholder="Alamat" />
+            <textarea class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" name="alamat" maxlength="255" v-model="alamat" placeholder="Alamat" />
           </div>
           <div class="md:w-1/2 px-3 mb-6 md:mb-0">
             <label class="uppercase tracking-wide text-black text-xs font-bold mb-2">
@@ -161,41 +162,6 @@
         </div>
       </div>
     </form>
-        <!-- <form @submit="addUser">
-            <input type="text" name="nama" v-model="nama" placeholder="Nama">
-            <input type="number" name="nik" v-model="nik" placeholder="NIK">
-            <input type="number" name="no_kk" v-model="no_kk" placeholder="Nomor Kartu Keluarga">
-            <input type="number" name="umur" v-model="umur" placeholder="Umur">
-             <label for="jk">Jenis Kelamin</label>
-              <select v-model="jk" name="jk" id="jk">
-                <option value="Laki-Laki">Laki-Laki</option>
-                <option value="Perempuan">Perempuan</option>
-              </select> 
-            <input type="text" name="provinsi" v-model="provinsi" placeholder="Provinsi"> 
-            <input type="text" name="kabkota" v-model="kabkota" placeholder="Kabupaten/Kota"> 
-            <input type="text" name="kec" v-model="kec" placeholder="Kecamatan"> 
-            <input type="text" name="keldes" v-model="keldes" placeholder="Kelurahan/Desa"> 
-            <input type="text" name="alamat" v-model="alamat" placeholder="Alamat">
-            <input type="number" name="rt" v-model="rt" placeholder="RT">
-            <input type="number" name="rw" v-model="rw" placeholder="RW">
-            <input type="number" name="p_before" v-model="p_before" placeholder="Penghasilan Sebelum Pandemi">
-            <input type="number" name="p_after" v-model="p_after" placeholder="Penghasilan Setelah Pandemi">
-            <label for="alasan">Alasan Membutuhkan Bantuan</label>
-              <select v-model="alasan" name="alasan" id="alasan">
-                <option value="Kehilangan pekerjaan">Kehilangan pekerjaan</option>
-                <option value="Kepala keluarga terdampak atau korban Covid-19">Kepala keluarga terdampak atau korban Covid-19</option>
-                <option value="Tergolong fakir/miskin semenjak sebelum Covid-19">Tergolong fakir/miskin semenjak sebelum Covid-19</option>
-                <option value="Lainnya">Lainnya...</option>
-              </select>
-            <div v-if="alasan === 'Lainnya'">
-            <input type="text" name="alasan" v-model="alsan_lainnya" placeholder="Alasan Lainnya"> 
-            </div>            
-            <input type="file" accept="image/png" @change=uploadKTP>
-            <input type="file" accept="image/png" @change=uploadKK>
-            <input type="checkbox" value="Saya menyatakan bahwa data yang diisikan adalah benar dan siap mempertanggungjawabkan apabila ditemukan ketidaksesuaian dalam data tersebut." v-model="checked">
-            <label>Saya menyatakan bahwa data yang diisikan adalah benar dan siap mempertanggungjawabkan apabila ditemukan ketidaksesuaian dalam data tersebut.</label>
-            <input type="submit" value="Submit" class="btn btn-info">
-        </form> -->
 </div>
 </template>
 
@@ -231,19 +197,27 @@ export default {
                 const image = e.target.files[0];
                 const reader = new FileReader();
                 reader.readAsDataURL(image);
+                if (image['size'] < 2000000){
                 reader.onload = e =>{
                     this.previewKTP = e.target.result;
                     // console.log(this.previewImage);
                 };
+               }else{
+                 alert("File terlalu besar. Maksimal 2MB, format JPG/JPEG/PNG/BMP")
+               }
           },
           uploadKK(e){
                 const image = e.target.files[0];
                 const reader = new FileReader();
                 reader.readAsDataURL(image);
+                if (image['size'] < 2000000){
                 reader.onload = e =>{
                     this.previewKK = e.target.result;
                     // console.log(this.previewImage);
                 };
+              }else{
+                 alert("File terlalu besar. Maksimal 2MB, format JPG/JPEG/PNG/BMP")
+               }
           },
             addUser(e){
                     const newUser = {
