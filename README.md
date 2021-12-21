@@ -1,29 +1,15 @@
-# Nuxt 3 Minimal Starter
+# Form Nama Penerima Bansos Covid-19
 
-We recommend to look at the [documentation](https://v3.nuxtjs.org).
+Dibangun menggunakan [Nuxtjs 3 Beta](https://v3.nuxtjs.org).
 
-## Setup
+## Halaman Input
 
-Make sure to install the dependencies
+[Input Nama Penerima Bansos](https://test.ilhamtaufiq.dev).
 
-```bash
-yarn install
-```
+## Halaman Data yang Telah Di-Input
 
-## Development
+[Review Nama](https://test.ilhamtaufiq.dev/user).
 
-Start the development server on http://localhost:3000
+## Penyimpanan Data
 
-```bash
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-yarn build
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment).
+Penyimpanan data menggunakan Local Storage
